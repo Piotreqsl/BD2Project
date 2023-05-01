@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,13 +75,11 @@ WSGI_APPLICATION = 'BD2_Project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+db_config = dj_database_url.config(default='postgres://qejsqkld:NDI65XmsmyllQzTj5Md1lib0RUolewUS@kandula.db.elephantsql.com/qejsqkld')
+db_config['ATOMIC_REQUESTS'] = True
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Airplanes',
-        'USER': 'sobiesia',
-        'PASSWORD': 'sobiesia',
-    }
+    'default': db_config
 }
 
 
