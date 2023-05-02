@@ -8,30 +8,20 @@ country_name_length = 50
 person_name_length = 50
 plane_name_length = 50
 
-class TestModel(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField()
+# class TestModel(models.Model):
+#     name = models.CharField(max_length=200)
+#     description = models.TextField()
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 class Plane(models.Model):
     name = models.CharField(max_length=plane_name_length)
     def __str__(self):
         return self.name
-
-class Flight(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-    departure_from = models.CharField(max_length=airport_name_length)
-    departure_at = models.TimeField()
-    arrival_to = models.CharField(max_length=airport_name_length)
-    arrival_at = models.TimeField()
-    no_seats = models.IntegerField(default=0)
-    plane = models.ForeignKey(Plane, on_delete=models.CASCADE)
-    def __str__(self):
-        return self.name
-
+    
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in self._meta.fields]
 
 class Airport(models.Model):
     name = models.CharField(max_length=airport_name_length)
@@ -42,6 +32,29 @@ class Airport(models.Model):
     
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in self._meta.fields]
+
+
+class Flight(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    departure_from = models.ForeignKey(Airport ,on_delete=models.CASCADE, related_name='departure_from')
+    departure_at = models.TimeField()
+    arrival_to = models.ForeignKey(Airport ,on_delete=models.CASCADE, related_name='arrival_to')
+    arrival_at = models.TimeField()
+    no_seats = models.IntegerField(default=0)
+    plane = models.ForeignKey(Plane, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self))
+                if field.name != 'plane' and field.name != 'departure_from' and field.name != 'arrival_to'
+                else 
+                (field.name, Plane.objects.get(pk=field.value_from_object(self).name) if field.name == 'plane' else field.value_to_string(self.departure_from) if field.name == 'departure_from' else field.value_to_string(self.arrival_to))
+
+                
+                 for field in self._meta.fields]
+
+
 
 class Passenger(models.Model):
     firstname = models.CharField(max_length=person_name_length)

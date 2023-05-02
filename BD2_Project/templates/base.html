@@ -28,30 +28,27 @@
           <span class="navbar-text text-white">DJANGO C.R.U.D.</span>
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link active" href="{% url 'airports:all' %}"
+              <a
+                class="nav-link active"
+                href="{% url 'airplanes:all_airports' %}"
                 >airports</a
               >
             </li>
 
+            <li class="nav-item active">
+              <a class="nav-link active" href="{% url 'airplanes:all_planes' %}"
+                >planes</a
+              >
+            </li>
+
             <!-- 
-                ##
-                ## UNCOMMENT THESE LINES IF YOU HAVE A FUNCTIONAL CRUD FOR THE GENRE MODEL 
-                ## CHANGE ALSO THE URL INFO 'films:all' to 'films:genre_all'     
+                    
                 
                 <li class="nav-item active">
-                    <a class="nav-link active" href="{% url 'airports:all' %}">Genres</a>
+                    <a class="nav-link active" href="{% url 'airplanes:all_airports' %}">Genres</a>
                 </li>
 
                 -->
-
-            <li class="nav-item active">
-              <a
-                class="nav-link active"
-                href="https://linktr.ee/fabriciobarbacena"
-                target="_blank"
-                >My Social Media</a
-              >
-            </li>
           </ul>
         </div>
       </nav>

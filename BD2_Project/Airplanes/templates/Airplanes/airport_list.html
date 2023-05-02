@@ -1,15 +1,17 @@
 {% extends 'base.html' %} {% block content %} {% for airport in airport_list %}
 <p>
-  <a href="{% url 'airports:airport_detail' airport.id  %}">{{airport.name}}</a>
+  <a href="{% url 'airplanes:airport_detail' airport.id  %}"
+    >{{airport.name}}</a
+  >
 </p>
 
 <p>
-  <a href="{% url 'airports:airport_update' airport.id  %}">Edit</a>
+  <a href="{% url 'airplanes:airport_update' airport.id  %}">Edit</a>
 </p>
 <p>
-  <a href="{% url 'airports:airport_delete' airport.id  %}">Delete</a>
+  <a href="{% url 'airplanes:airport_delete' airport.id  %}">Delete</a>
 </p>
 {% endfor %}
 
-<a href="{% url 'airports:airport_create' %}">Add Airport</a>
+<a href="{% url 'airplanes:airport_create' %}">Add Airport</a>
 {% endblock %}
