@@ -15,3 +15,25 @@ class AirportListView(AirportBaseView, ListView):
     """View to list all airporsts.
     Use the 'airport_list' variable in the template
     to access all Airport objects"""
+
+class AirportDetailView(AirportBaseView, DetailView):
+    """View to show details of a single airport.
+    Use the 'airport' variable in the template
+    to access the Airport object."""
+
+class AirportCreateView(AirportBaseView, CreateView):
+    """View to create a new airport.
+    Use the 'airport' variable in the template
+    to access the Airport object."""
+
+
+class AirportUpdateView(AirportBaseView, UpdateView):
+    """View to update an existing airport.
+    Use the 'airport' variable in the template
+    to access the Airport object."""
+
+
+class AirportDeleteView(AirportBaseView, DeleteView):
+    """View to delete an existing airport.
+    Use the 'airport' variable in the template
+    to access the Airport object."""

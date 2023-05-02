@@ -39,6 +39,9 @@ class Airport(models.Model):
     town = models.CharField(max_length=country_name_length)
     def __str__(self):
         return self.name
+    
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in self._meta.fields]
 
 class Passenger(models.Model):
     firstname = models.CharField(max_length=person_name_length)
