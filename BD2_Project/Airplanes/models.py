@@ -38,9 +38,9 @@ class Flight(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     departure_from = models.ForeignKey(Airport ,on_delete=models.CASCADE, related_name='departure_from')
-    departure_at = models.TimeField()
+    departure_at = models.DateTimeField()
     arrival_to = models.ForeignKey(Airport ,on_delete=models.CASCADE, related_name='arrival_to')
-    arrival_at = models.TimeField()
+    arrival_at = models.DateTimeField()
     no_seats = models.IntegerField(default=0)
     plane = models.ForeignKey(Plane, on_delete=models.CASCADE)
     def __str__(self):
@@ -49,9 +49,7 @@ class Flight(models.Model):
         return [(field.name, field.value_to_string(self))
                 if field.name != 'plane' and field.name != 'departure_from' and field.name != 'arrival_to'
                 else 
-                (field.name, Plane.objects.get(pk=field.value_from_object(self).name) if field.name == 'plane' else field.value_to_string(self.departure_from) if field.name == 'departure_from' else field.value_to_string(self.arrival_to))
-
-                
+                (field.name, Plane.objects.get(pk=field.value_from_object(self)).name if field.name == 'plane' else Airport.objects.get(pk=field.value_from_object(self)).name)
                  for field in self._meta.fields]
 
 
