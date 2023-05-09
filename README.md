@@ -1,5 +1,5 @@
 # System rezerwacji lotów
-## Adrian Stahl ,Aleksandra Sobiesiak, Piotr Śliperski
+## Adrian Stahl, Aleksandra Sobiesiak, Piotr Śliperski
 
 # Opis
 
