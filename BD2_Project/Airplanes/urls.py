@@ -22,4 +22,17 @@ urlpatterns = [
     path('flight/create', views.FlightCreateView.as_view(), name='flight_create'),
     path('flight/<int:pk>/update', views.FlightUpdateView.as_view(), name='flight_update'),
     path('flight/<int:pk>/delete', views.FlightDeleteView.as_view(), name='flight_delete'),
+
+    path("passenger/", views.PassengerListView.as_view(), name="all_passengers"),
+    path("passenger/<int:pk>", views.PassengerDetailView.as_view(), name="passenger_detail"),
+    path("passenger/create", views.PassengerCreateView.as_view(), name="passenger_create"),
+    path("passenger/<int:pk>/update", views.PassengerUpdateView.as_view(), name="passenger_update"),
+    path("passenger/<int:pk>/delete", views.PassengerDeleteView.as_view(), name="passenger_delete"),
+
+    path("reservation/", views.ReservationListView.as_view(), name="all_reservations"),
+    path("reservation/<int:pk>", views.ReservationDetailView.as_view(), name="reservation_detail"),
+    path("reservation/create", views.ReservationCreateView.as_view(), name="reservation_create"),
+    path("reservation/<int:pk>/update", views.ReservationUpdateView.as_view(), name="reservation_update"),
+    path("reservation/<int:pk>/delete", views.ReservationDeleteView.as_view(), name="reservation_delete"),
+    
 ]

@@ -3,7 +3,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import Airport, Plane, Flight
+from .models import Airport, Plane, Flight, Passenger, Reservation
 
 # Create your views here.
 class AirportBaseView(View):
@@ -104,3 +104,65 @@ class FlightDeleteView(FlightBaseView, DeleteView):
     to access the Flight object."""
 
 #############################
+
+class PassengerBaseView(View):
+    model = Passenger
+    fields = '__all__'
+    success_url = reverse_lazy('airplanes:all_passengers')
+
+class PassengerListView(PassengerBaseView, ListView):
+    """View to list all passengers.
+    Use the 'passenger_list' variable in the template
+    to access all Passenger objects"""
+
+class PassengerDetailView(PassengerBaseView, DetailView):
+    """View to show details of a single passenger.
+    Use the 'passenger' variable in the template
+    to access the Passenger object."""
+
+class PassengerCreateView(PassengerBaseView, CreateView):
+    """View to create a new passenger.
+    Use the 'passenger' variable in the template
+    to access the Passenger object."""
+
+class PassengerUpdateView(PassengerBaseView, UpdateView):
+    """View to update an existing passenger.
+    Use the 'passenger' variable in the template
+    to access the Passenger object."""
+
+class PassengerDeleteView(PassengerBaseView, DeleteView):
+    """View to delete an existing passenger.
+    Use the 'passenger' variable in the template
+    to access the Passenger object."""
+
+#############################
+
+class ReservationBaseView(View):
+    model = Reservation
+    fields = '__all__'
+    success_url = reverse_lazy('airplanes:all_reservations')
+
+class ReservationListView(ReservationBaseView, ListView):
+    """View to list all reservations.
+    Use the 'reservation_list' variable in the template
+    to access all Reservation objects"""
+
+class ReservationDetailView(ReservationBaseView, DetailView):
+    """View to show details of a single reservation.
+    Use the 'reservation' variable in the template
+    to access the Reservation object."""
+
+class ReservationCreateView(ReservationBaseView, CreateView):
+    """View to create a new reservation.
+    Use the 'reservation' variable in the template
+    to access the Reservation object."""
+
+class ReservationUpdateView(ReservationBaseView, UpdateView):
+    """View to update an existing reservation.
+    Use the 'reservation' variable in the template
+    to access the Reservation object."""
+
+class ReservationDeleteView(ReservationBaseView, DeleteView):
+    """View to delete an existing reservation.
+    Use the 'reservation' variable in the template
+    to access the Reservation object."""

@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% block content %} {% for res in reservation_list %}
+<p>
+  <a href="{% url 'airplanes:reservation_detail' res.id  %}"
+    >{{res.person}} - {{res.flight}}
+  </a>
+</p>
+
+<p>
+  <a href="{% url 'airplanes:reservation_update' res.id  %}">Edit</a>
+</p>
+<p>
+  <a href="{% url 'airplanes:reservation_delete' res.id  %}">Delete</a>
+</p>
+{% endfor %}
+
+<a href="{% url 'airplanes:reservation_create' %}">Add Reservation</a>
+{% endblock %}

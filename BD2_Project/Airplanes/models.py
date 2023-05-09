@@ -61,11 +61,17 @@ class Passenger(models.Model):
     descrption = models.TextField()
     def __str__(self):
         return self.firstname + " " + self.surname
+    
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in self._meta.fields]
 
 class Reservation(models.Model):
     person = models.ForeignKey(Passenger, on_delete=models.CASCADE)
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
     paid = models.BooleanField()
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in self._meta.fields]
 
 class Worker(models.Model):
     firstname = models.CharField(max_length=person_name_length)
