@@ -17,7 +17,7 @@ Aplikacja webowa do rezerwowania lotów i ich obsługi
 
 # Technologie
 
-- MongoDB
+- POSTGRESQL
 - Django + Python
 - Front - HTML CSS
 
