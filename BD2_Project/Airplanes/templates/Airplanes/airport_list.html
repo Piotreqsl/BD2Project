@@ -1,17 +1,25 @@
-{% extends 'base.html' %} {% block content %} {% for airport in airport_list %}
-<p>
-  <a href="{% url 'airplanes:airport_detail' airport.id  %}"
-    >{{airport.name}}</a
-  >
-</p>
+{% extends 'base.html' %}
+{% block content %}
 
-<p>
-  <a href="{% url 'airplanes:airport_update' airport.id  %}">Edit</a>
-</p>
-<p>
-  <a href="{% url 'airplanes:airport_delete' airport.id  %}">Delete</a>
-</p>
-{% endfor %}
+<div style="margin-top: 30px;" class="container">
+  <h1 class="mb-5">Airports</h1>
+  {% for airport in airport_list %}
+    <div class="card mb-3">
+      <div class="card-body d-flex align-items-center justify-content-between">
+        <h5 class="card-title mb-0">
+          <a href="{% url 'airplanes:airport_detail' airport.id %}">
+            {{ airport.name }}
+          </a>
+        </h5>
+        <div>
+          <a href="{% url 'airplanes:airport_update' airport.id %}" class="btn btn-primary">Edit</a>
+          <a href="{% url 'airplanes:airport_delete' airport.id %}" class="btn btn-danger ml-2">Delete</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
 
-<a href="{% url 'airplanes:airport_create' %}">Add Airport</a>
+  <a href="{% url 'airplanes:airport_create' %}" class="btn btn-success">Add Airport</a>
+</div>
 {% endblock %}
+
