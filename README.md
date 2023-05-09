@@ -1,5 +1,7 @@
 # System rezerwacji lotów
+
 ## Adrian Stahl, Aleksandra Sobiesiak, Piotr Śliperski
+
 
 # Opis
 
@@ -17,7 +19,8 @@ Aplikacja webowa do rezerwowania lotów i ich obsługi
 
 # Technologie
 
-- POSTGRESQL
+
+- Postgresql
 - Django + Python
 - Front - HTML CSS
 
@@ -31,13 +34,13 @@ Aplikacja webowa do rezerwowania lotów i ich obsługi
 # Funkcjonalności
 
 - Pasażer
-    - Rezerwacja biletu na przelot
-    - Przeglądanie dostępnych lotów
-    - Anulowanie rezerwacji
+  - Rezerwacja biletu na przelot
+  - Przeglądanie dostępnych lotów
+  - Anulowanie rezerwacji
 - Pracownik - zarządca rezerwacji
-    - Potwierdzenie / odrzucenie rezerwacji
+  - Potwierdzenie / odrzucenie rezerwacji
 - Pracownik - zarządca lotami
-    - Dodawanie / edytowanie / usuwanie lotów
+  - Dodawanie / edytowanie / usuwanie lotów
 - Administrator
-    - Wszystkie funkcjonalności powyżej
-    - Dodawanie / edytowanie / usuwanie wszelkich tabel
+  - Wszystkie funkcjonalności powyżej
+  - Dodawanie / edytowanie / usuwanie wszelkich tabel

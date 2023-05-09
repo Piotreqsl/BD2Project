@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block content %} {% for plane in plane_list %}
+<p>
+  <a href="{% url 'airplanes:plane_detail' plane.id  %}">{{plane.name}}</a>
+</p>
+
+<p>
+  <a href="{% url 'airplanes:plane_update' plane.id  %}">Edit</a>
+</p>
+<p>
+  <a href="{% url 'airplanes:plane_delete' plane.id  %}">Delete</a>
+</p>
+{% endfor %}
+
+<a href="{% url 'airplanes:plane_create' %}">Add Plane</a>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block content %}
+<div class="container d-flex justify-content-center mt-5" style="width: 50%">
+  <div class="col mt-5 text-center">
+    <h1 class="mb-5">Delete Airport</h1>
+
+    <p class="h5">Are you sure you want to delete the Airport:</p>
+    <h3 class="my-5">{{ airport.name }}</h3>
+    <form action="" method="POST">
+      {% csrf_token %}
+
+      <input
+        type="submit"
+        class="btn btn-primary btn-lg"
+        value="Confirm"
+        style="margin-right: 30px; margin-top: 30px"
+      />
+      <input
+        type="submit"
+        class="btn btn-danger btn-lg"
+        style="margin-top: 30px"
+        onclick="window.location='{% url 'airplanes:all_airports' %}'; return false;"
+        value="Cancel"
+      />
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block content %} {% for pass in passenger_list %}
+<p>
+  <a href="{% url 'airplanes:passenger_detail' pass.id  %}"
+    >{{pass.firstname}}</a
+  >
+</p>
+
+<p>
+  <a href="{% url 'airplanes:passenger_update' pass.id  %}">Edit</a>
+</p>
+<p>
+  <a href="{% url 'airplanes:passenger_delete' pass.id  %}">Delete</a>
+</p>
+
+{% endfor %}
+
+<a href="{% url 'airplanes:passenger_create' %}">Add Passenger</a>
+{% endblock %}
