@@ -1,6 +1,7 @@
 # System rezerwacji lotów
 
-## Adrian Stahl ,Aleksandra Sobiesiak, Piotr Śliperski
+## Adrian Stahl, Aleksandra Sobiesiak, Piotr Śliperski
+
 
 # Opis
 
@@ -17,6 +18,7 @@ Aplikacja webowa do rezerwowania lotów i ich obsługi
 - (opcjonalnie) Bagaże
 
 # Technologie
+
 
 - Postgresql
 - Django + Python
