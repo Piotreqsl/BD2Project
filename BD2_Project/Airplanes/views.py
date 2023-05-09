@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.views import View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -6,6 +7,10 @@ from django.urls import reverse_lazy
 from .models import Airport, Plane, Flight, Passenger, Reservation
 
 # Create your views here.
+
+def HomeView(request):
+    return render(request, 'home.html')
+
 class AirportBaseView(View):
     model = Airport
     fields = '__all__'
