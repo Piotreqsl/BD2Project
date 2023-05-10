@@ -2,7 +2,6 @@
 
 ## Adrian Stahl, Aleksandra Sobiesiak, Piotr Śliperski
 
-
 # Opis
 
 Aplikacja webowa do rezerwowania lotów i ich obsługi
@@ -18,7 +17,6 @@ Aplikacja webowa do rezerwowania lotów i ich obsługi
 - (opcjonalnie) Bagaże
 
 # Technologie
-
 
 - Postgresql
 - Django + Python
@@ -44,3 +42,7 @@ Aplikacja webowa do rezerwowania lotów i ich obsługi
 - Administrator
   - Wszystkie funkcjonalności powyżej
   - Dodawanie / edytowanie / usuwanie wszelkich tabel
+
+# Schemat bazy danych (stan na 10.05)
+
+![Schemat](/schema.png)
