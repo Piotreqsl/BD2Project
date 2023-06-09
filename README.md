@@ -2,7 +2,6 @@
 
 ## Adrian Stahl, Aleksandra Sobiesiak, Piotr Śliperski
 
-
 # Opis
 
 Aplikacja webowa do rezerwowania lotów i ich obsługi
@@ -18,7 +17,6 @@ Aplikacja webowa do rezerwowania lotów i ich obsługi
 - (opcjonalnie) Bagaże
 
 # Technologie
-
 
 - Postgresql
 - Django + Python
@@ -44,3 +42,30 @@ Aplikacja webowa do rezerwowania lotów i ich obsługi
 - Administrator
   - Wszystkie funkcjonalności powyżej
   - Dodawanie / edytowanie / usuwanie wszelkich tabel
+
+# Schemat bazy danych (stan na 10.05)
+
+![Schemat](/schema.png)
+
+# Jakie zapytania idą do bazy przy zapytaniach CRUD
+
+## Na przykładzie tabeli airports
+
+### Wypisanie wszystkich lotnisk
+
+SELECT "Airplanes_airport"."id", "Airplanes_airport"."name", "Airplanes_airport"."country", "Airplanes_airport"."town" FROM "Airplanes_airport"
+
+### Szczegóły lotniska
+
+SELECT "Airplanes_airport"."id", "Airplanes_airport"."name", "Airplanes_airport"."country", "Airplanes_airport"."town" FROM "Airplanes_airport" WHERE "Airplanes_airport"."id" = 2 LIMIT 21
+
+### Edycja lotniska
+
+UPDATE "Airplanes_airport" SET "name" = 'Port lotniczy gdańsk', "country" = 'Poland', "town" = 'Gdańsk' WHERE "Airplanes_airport"."id" = 3; args=('Port lotniczy gdańsk', 'Poland', 'Gdańsk', 3)
+
+### Usuwanie lotniska
+
+(0.047) DELETE FROM "Airplanes_worker" WHERE "Airplanes_worker"."working_on_id" IN (3); args=(3,)
+(0.046) DELETE FROM "Airplanes_airport" WHERE "Airplanes_airport"."id" IN (3); args=(3,)
+
+Jak widzimy usuwanie dzieje się kaskadowo (co prawda tabela workers pozostaje nieużywana w naszym systemie, jednak wpierw usuwani są pracownicy pracujący na danym lotnisku)

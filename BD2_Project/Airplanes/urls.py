@@ -5,7 +5,8 @@ from . import views
 app_name = 'airplanes'
 
 urlpatterns = [
-    path('', views.AirportListView.as_view(), name='all_airports'),
+    path('', views.HomeView, name='home'),
+    path('airport/', views.AirportListView.as_view(), name='all_airports'),
     path('airport/<int:pk>', views.AirportDetailView.as_view(), name='airport_detail'),
     path('airport/create', views.AirportCreateView.as_view(), name='airport_create'),
     path('airport/<int:pk>/update', views.AirportUpdateView.as_view(), name='airport_update'),

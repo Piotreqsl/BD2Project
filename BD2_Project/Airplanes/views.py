@@ -12,6 +12,8 @@ from .models import Airport, Plane, Flight, Passenger, Reservation
 
 # Create your views here.
 
+def HomeView(request):
+    return render(request, 'home.html')
 def login_user(request):
     if request.method == "POST":
         form = CreateLoginForm(request.POST)
