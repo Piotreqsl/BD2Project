@@ -59,6 +59,12 @@ def register_user(request):
         form = RegisterUserForm()
         return render(request, 'register.html', {"form": form})
 
+
+def flight_search_view(request):
+    airports = Airport.objects.all()
+    return render(request, 'flight_search.html', {"airports": airports})
+
+
 class AirportBaseView(View):
     model = Airport
     fields = '__all__'

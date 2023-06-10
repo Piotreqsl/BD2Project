@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Wylot z:</h1>
+<input type="text" id="departure" />
+<h1>Przylot do:</h1>
+<input type="text" id="arrival" />
+<script>
+  $( function() {
+    var availableTags = [
+        {% for airport in airports %}
+            "{{airport.name}}",
+        {% endfor %}
+    ];
+    $( "#departure" ).autocomplete({
+      source: availableTags,
+     minLength: 0
+    })
+    .focus(function() {
+        $(this).autocomplete("search");
+    });
+
+    $( "#arrival" ).autocomplete({
+      source: availableTags,
+     minLength: 0
+    })
+    .focus(function() {
+        $(this).autocomplete("search");
+    });
+  } );
+</script>
+{% endblock %}

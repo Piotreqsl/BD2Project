@@ -37,5 +37,6 @@ urlpatterns = [
     path("reservation/<int:pk>/delete", views.ReservationDeleteView.as_view(), name="reservation_delete"),
 
     path("login/", views.login_user, name="login"),
-    path("register/", views.register_user, name="register")
+    path("register/", views.register_user, name="register"),
+    path("search/", views.flight_search_view, name="search")
 ]

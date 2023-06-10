@@ -11,6 +11,16 @@
       rel="stylesheet"
     />
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+
+    <link
+      href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
     {% block title %}
     <title>AIRPORTS</title>
     {% endblock title %} {% block head %} {% endblock head %}
@@ -25,9 +35,12 @@
           class="d-flex justify-content-between px-5 mx-auto"
           style="width: 80%"
         >
-          <span class="navbar-text text-white"><a class="nav-link active" href="{% url 'airplanes:home' %}">DJANGO C.R.U.D.</a></span>
+          <span class="navbar-text text-white"
+            ><a class="nav-link active" href="{% url 'airplanes:home' %}"
+              >DJANGO C.R.U.D.</a
+            ></span
+          >
           <ul class="navbar-nav mr-auto">
-
             <li class="nav-item active">
               <a
                 class="nav-link active"
@@ -65,18 +78,21 @@
                 >reservations</a
               >
             </li>
-              <li class="nav-item active">
-              <a
-                class="nav-link active"
-                href="{% url 'airplanes:login' %}"
+
+            <li class="nav-item active">
+              <a class="nav-link active" href="{% url 'airplanes:search' %}"
+                >search flights</a
+              >
+            </li>
+
+            <li class="nav-item active">
+              <a class="nav-link active" href="{% url 'airplanes:login' %}"
                 >LOGIN</a
               >
             </li>
 
             <li class="nav-item active">
-              <a
-                class="nav-link active"
-                href="{% url 'airplanes:register' %}"
+              <a class="nav-link active" href="{% url 'airplanes:register' %}"
                 >REGISTER</a
               >
             </li>
