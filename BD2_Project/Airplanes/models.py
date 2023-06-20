@@ -1,8 +1,10 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 # Create your models here.
 
@@ -53,6 +55,14 @@ class Flight(models.Model):
     def __str__(self):
         return self.name
 
+    def count_reservations(self):
+        return Reservation.objects.filter(
+            Q(flight=self.id, status=Status.ACCEPTED) | Q(flight=self.id, status=Status.PENDING)
+        ).count()
+
+    def free_places(self):
+        return self.no_seats - self.count_reservations()
+
     def get_fields(self):
         list = [(field.name, field.value_to_string(self))
                 if field.name != 'plane' and field.name != 'departure_from' and field.name != 'arrival_to'
@@ -62,10 +72,8 @@ class Flight(models.Model):
                     pk=field.value_from_object(self)).name)
                 for field in self._meta.fields]
 
-        reservation_count = Reservation.objects.filter(flight=self.id, paid=True).count()
-        list.append(('reservation_count', reservation_count))
-        free_places = self.no_seats - reservation_count
-        list.append(('free_places', free_places))
+        list.append(('reservation_count', self.count_reservations()))
+        list.append(('free_places', self.free_places()))
         return list
 
 
@@ -100,6 +108,7 @@ class Reservation(models.Model):
         choices=Status.choices,
         default=Status.PENDING
     )
+    date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.person.user.username + " " + self.flight.name

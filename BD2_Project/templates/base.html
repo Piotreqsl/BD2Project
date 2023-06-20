@@ -40,18 +40,19 @@
               ><h1>FlyFly</h1></a
             ></span
           >
+          {% if user.is_superuser %}
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
               <a
                 class="nav-link active"
                 href="{% url 'airplanes:all_airports' %}"
-                >airports</a
+                >edit airports</a
               >
             </li>
 
             <li class="nav-item active">
               <a class="nav-link active" href="{% url 'airplanes:all_planes' %}"
-                >planes</a
+                >edit planes</a
               >
             </li>
 
@@ -59,35 +60,36 @@
               <a
                 class="nav-link active"
                 href="{% url 'airplanes:all_flights' %}"
-                >flights</a
+                >edit flights</a
               >
             </li>
-            {% if user.is_superuser %}
             <li class="nav-item active">
               <a
                 class="nav-link active"
                 href="{% url 'airplanes:all_passengers' %}"
-                >passengers</a
+                >list of passengers</a
               >
             </li>
-            {% endif %}
 
             <li class="nav-item active">
               <a
                 class="nav-link active"
                 href="{% url 'airplanes:all_reservations' %}"
-                >reservations</a
+                >list of reservations</a
               >
             </li>
+            {% endif %}
 
             <li class="nav-item active">
               <a class="nav-link active" href="{% url 'airplanes:search' %}"
                 >search flights</a
               >
             </li>
+
             {% if user.is_authenticated %}
             <li class="nav-item active">
               <a class="nav-link active" href="{% url 'airplanes:logout'%}">LOGOUT</a>
+            </li>
             {% else %}
             <li class="nav-item active">
               <a class="nav-link active" href="{% url 'airplanes:login' %}"

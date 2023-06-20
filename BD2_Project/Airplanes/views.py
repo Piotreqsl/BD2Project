@@ -14,6 +14,8 @@ from .models import Airport, Plane, Flight, Profile, Reservation
 
 def HomeView(request):
     return render(request, 'home.html')
+
+
 def login_user(request):
     if request.method == "POST":
         form = CreateLoginForm(request.POST)
@@ -25,7 +27,7 @@ def login_user(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('airplanes:flight')
+                return redirect('airplanes:home')
 
             # nie udało się
             info = "The logging in was unsuccessful"
@@ -34,9 +36,11 @@ def login_user(request):
         form = CreateLoginForm()
         return render(request, 'login.html', {"form": form})
 
+
 def logout_user(request):
     logout(request)
     return redirect('airplanes:home')
+
 
 def register_user(request):
     if request.method == "POST":
@@ -50,7 +54,7 @@ def register_user(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('airplanes:login')
+                return redirect('airplanes:home')
 
             # nie udało się
             info = "The registration was unsuccessful"
@@ -76,13 +80,20 @@ def flight_search_results_view(request):
     departure = request.GET['departure']
     arrival_airport = Airport.objects.get(name=arrival)
     departure_airport = Airport.objects.get(name=departure)
-    ##reuslt with get fields method
-
-
     results = Flight.objects.filter(arrival_to=arrival_airport.id, departure_from=departure_airport.id)
-
-    
     return render(request, 'flight_search_results.html', {"flights": results})
+
+
+def book(request, pk):
+    flight = Flight.objects.get(id=pk)
+    if flight:
+        Reservation.objects.create(person=request.user.profile, flight=flight)
+    elif flight.free_places() == 0:
+        raise SystemError("YOU CAN'T ADD RESERVATION!")
+    else:
+        raise KeyError("the flight does not exist")
+    return redirect('airplanes:home')
+
 
 class AirportBaseView(View):
     model = Airport

@@ -40,4 +40,5 @@ urlpatterns = [
     path("register/", views.register_user, name="register"),
     path("search/", views.flight_search_view, name="search"),
     path("result/", views.flight_search_results_view, name="flight_search_results"),
+    path("book/<int:pk>/", views.book, name="book")
 ]

@@ -7,7 +7,7 @@
     {% for label, value in flight.get_fields %}
     <p>{{ label }}: {{ value }}</p>
     {% if label == 'free_places' and value > 0 %}
-    <a href="#">Book</a>
+    <a href="{% url 'airplanes:book' flight.pk %}">Book</a>
     {% endif %} {% endfor %}
   </li>
   {% endfor %}
