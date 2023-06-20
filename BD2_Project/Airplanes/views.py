@@ -1,5 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from django.views import View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -7,7 +9,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 from .forms import CreateLoginForm, RegisterUserForm
-from .models import Airport, Plane, Flight, Profile, Reservation
+from .models import Airport, Plane, Flight, Profile, Reservation, Status
 
 
 # Create your views here.
@@ -78,9 +80,19 @@ def flight_search_view(request):
 def flight_search_results_view(request):
     arrival = request.GET["arrival"]
     departure = request.GET['departure']
+    start_date = request.GET["start_date"]
+    end_date = request.GET["end_date"]
+
     arrival_airport = Airport.objects.get(name=arrival)
     departure_airport = Airport.objects.get(name=departure)
-    results = Flight.objects.filter(arrival_to=arrival_airport.id, departure_from=departure_airport.id)
+
+
+    results = Flight.objects.filter(
+        arrival_to=arrival_airport.id,
+        departure_from=departure_airport.id,
+        departure_at__gte=start_date,
+        arrival_at__lte=end_date
+    )
     return render(request, 'flight_search_results.html', {"flights": results})
 
 
@@ -93,7 +105,15 @@ def book(request, pk):
     else:
         raise KeyError("the flight does not exist")
     return redirect('airplanes:home')
+@login_required
+def cancel_reservation(request, reservation_pk):
+    reservation = Reservation.objects.filter(pk=reservation_pk).update(status=Status.CANCELLED)
+    return redirect('airplanes:home')
 
+@login_required
+def manage_reservations(request):
+    reservations = Reservation.objects.filter(person=request.user.profile, date__lte=timezone.now())
+    return render(request, 'my_reservations.html', {"reservations": reservations})
 
 class AirportBaseView(View):
     model = Airport

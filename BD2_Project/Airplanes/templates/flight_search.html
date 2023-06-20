@@ -1,34 +1,43 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
+<div style="margin-top: 30px;" class="container">
 
 <form action="/result" method="get">
   <h1>Wylot z:</h1>
   <input name="departure" type="text" id="departure" />
   <h1>Przylot do:</h1>
   <input name="arrival" type="text" id="arrival" />
+  <h1>Data wylotu:</h1>
+  <input name="start_date" type="datetime-local" id="start_date" />
+  <h1>Data przylotu:</h1>
+  <input name="end_date" type="datetime-local" id="end_date" />
   <button type="submit" name="submit">Submit</button>
 </form>
+
 <script>
-  $( function() {
+  $(function() {
     var availableTags = [
-        {% for airport in airports %}
-            "{{airport.name}}",
-        {% endfor %}
+      {% for airport in airports %}
+        "{{ airport.name }}",
+      {% endfor %}
     ];
-    $( "#departure" ).autocomplete({
+
+    $("#departure").autocomplete({
       source: availableTags,
-     minLength: 0
-    })
-    .focus(function() {
-        $(this).autocomplete("search");
+      minLength: 0
+    }).focus(function() {
+      $(this).autocomplete("search");
     });
 
-    $( "#arrival" ).autocomplete({
+    $("#arrival").autocomplete({
       source: availableTags,
-     minLength: 0
-    })
-    .focus(function() {
-        $(this).autocomplete("search");
+      minLength: 0
+    }).focus(function() {
+      $(this).autocomplete("search");
     });
-  } );
+  });
 </script>
+
+</div>
+
 {% endblock %}

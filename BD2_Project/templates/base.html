@@ -33,11 +33,11 @@
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div
           class="d-flex justify-content-between px-5 mx-auto"
-          style="width: 80%"
+          style="width: 80%; align-items: center"
         >
           <span class="navbar-text text-white"
             ><a class="nav-link active" href="{% url 'airplanes:home' %}"
-              ><h1>FlyFly</h1></a
+              ><h3>FlyFly</h3></a
             ></span
           >
           {% if user.is_superuser %}
@@ -87,6 +87,9 @@
             </li>
 
             {% if user.is_authenticated %}
+            <li class="nav-item active">
+              <a class="nav-link active" href="{% url 'airplanes:manage_reservations' %}">My reservations</a>
+            </li>
             <li class="nav-item active">
               <a class="nav-link active" href="{% url 'airplanes:logout'%}">LOGOUT</a>
             </li>
