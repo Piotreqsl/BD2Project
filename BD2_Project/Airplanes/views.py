@@ -72,9 +72,12 @@ def flight_search_results_view(request):
     arrival = request.GET["arrival"]
     departure = request.GET['departure']
     arrival_airport = Airport.objects.get(name=arrival)
-    print(arrival_airport.id)
     departure_airport = Airport.objects.get(name=departure)
+    ##reuslt with get fields method
+
+
     results = Flight.objects.filter(arrival_to=arrival_airport.id, departure_from=departure_airport.id)
+
     
     return render(request, 'flight_search_results.html', {"flights": results})
 

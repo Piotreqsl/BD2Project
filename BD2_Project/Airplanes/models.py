@@ -52,13 +52,19 @@ class Flight(models.Model):
         return self.name
 
     def get_fields(self):
-        return [(field.name, field.value_to_string(self))
+        list = [(field.name, field.value_to_string(self))
                 if field.name != 'plane' and field.name != 'departure_from' and field.name != 'arrival_to'
                 else
                 (field.name, Plane.objects.get(
                     pk=field.value_from_object(self)).name if field.name == 'plane' else Airport.objects.get(
                     pk=field.value_from_object(self)).name)
                 for field in self._meta.fields]
+        
+        reservation_count = Reservation.objects.filter(flight=self.id, paid=True).count()
+        list.append(('reservation_count', reservation_count))
+        free_places = self.no_seats - reservation_count
+        list.append(('free_places', free_places))
+        return list
 
 
 class Passenger(models.Model):
