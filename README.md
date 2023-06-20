@@ -73,6 +73,7 @@ Jak widzimy usuwanie dzieje się kaskadowo (co prawda tabela workers pozostaje n
 ### Obliczanie liczby wolnych miejsc dla danego lotu
 
 Przy obliczaniu liczby wolnych miejsc do bazy wysyłane jest następujące zapytanie
+
 SELECT COUNT(\*) AS "\_\_count" FROM "Airplanes_reservation" WHERE ("Airplanes_reservation"."flight_id" = 3 AND "Airplanes_reservation"."paid")
 
 Mając liczbę aktywnych rezerwacji odejmujemy ją w pythonie od liczby wolnych miejsc, dzięki czemu uzyskujemy finalną liczbę
