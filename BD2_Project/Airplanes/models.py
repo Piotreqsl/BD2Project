@@ -12,6 +12,12 @@ person_name_length = 50
 plane_name_length = 50
 
 
+class Status(models.TextChoices):
+    CANCELLED = "CANCELLED"
+    PENDING = "PENDING"
+    ACCEPTED = "ACCEPTED"
+
+
 class Plane(models.Model):
     name = models.CharField(max_length=plane_name_length)
 
@@ -74,18 +80,29 @@ class Profile(models.Model):
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in self._meta.fields]
 
+
 @receiver(post_save, sender=User)
 def create_user_passenger_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+
+
 @receiver(post_save, sender=User)
 def save_user_passenger_profile(sender, instance, created, **kwargs):
     instance.profile.save()
 
+
 class Reservation(models.Model):
     person = models.ForeignKey(Profile, on_delete=models.CASCADE)
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
-    paid = models.BooleanField()
+    status = models.CharField(
+        max_length=9,
+        choices=Status.choices,
+        default=Status.PENDING
+    )
+
+    def __str__(self):
+        return self.person.user.username + " " + self.flight.name
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in self._meta.fields]
