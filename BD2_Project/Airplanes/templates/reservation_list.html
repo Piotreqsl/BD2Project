@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="margin-top: 30px;" class="container">
+  <h1 class="mb-5">Reservations</h1>
+
+    <form method="post" style="margin-bottom: 50px">
+        {% csrf_token %}
+      <h3>Flight name: </h3>
+        <input name="flight_name" type="text" id="flight_name">
+        <button type="submit" name="submit">Submit</button>
+    </form>
+
+  {% for res in reservation_list %}
+    <div class="card mb-3">
+      <div class="card-body d-flex align-items-center justify-content-between">
+        <h5 class="card-title mb-0">
+          <a href="{% url 'airplanes:reservation_detail' res.id %}">
+            {{ res.person }} - {{ res.flight }}
+          </a>
+        </h5>
+        <div>
+          {% if res.status == "PENDING" %}
+          <a href="{% url 'airplanes:accept_reservation' res.id %}" class="btn btn-warning">Accept</a>
+          {% endif %}
+          {% if res.status == "PENDING" %}
+            <a href="{% url 'airplanes:reservation_delete' res.id %}" class="btn btn-danger ml-2">Cancel</a>
+          {% endif %}
+            <a href="{% url 'airplanes:reservation_update' res.id %}" class="btn btn-primary">Edit</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+  <a href="{% url 'airplanes:reservation_create' %}" class="btn btn-success">Add Reservation</a>
+</div>
+{% endblock %}

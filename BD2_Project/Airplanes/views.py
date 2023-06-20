@@ -1,3 +1,4 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -83,19 +84,20 @@ def flight_search_results_view(request):
     start_date = request.GET["start_date"]
     end_date = request.GET["end_date"]
 
-    arrival_airport = Airport.objects.get(name=arrival)
-    departure_airport = Airport.objects.get(name=departure)
+    flights = Flight.objects.all()
 
+    if arrival:
+        arrival_airport = Airport.objects.get(name=arrival)
+        flights = flights.filter(arrival_to=arrival_airport.id)
 
-    results = Flight.objects.filter(
-        arrival_to=arrival_airport.id,
-        departure_from=departure_airport.id,
-        departure_at__gte=start_date,
-        arrival_at__lte=end_date
-    )
+    if departure:
+        departure_airport = Airport.objects.get(name=departure)
+        flights = flights.filter(departure_from=departure_airport.id)
+
+    results = flights.filter(departure_at__gte=start_date, arrival_at__lte=end_date)
     return render(request, 'flight_search_results.html', {"flights": results})
 
-
+@login_required
 def book(request, pk):
     flight = Flight.objects.get(id=pk)
     if flight:
@@ -114,6 +116,30 @@ def cancel_reservation(request, reservation_pk):
 def manage_reservations(request):
     reservations = Reservation.objects.filter(person=request.user.profile, date__lte=timezone.now())
     return render(request, 'my_reservations.html', {"reservations": reservations})
+
+def accept_reservation(request, reservation_id):
+    Reservation.objects.filter(pk=reservation_id).update(status=Status.ACCEPTED)
+    return redirect('airplanes:all_reservations')
+
+@staff_member_required
+def cancel_reservation_manager(request, reservation_pk):
+    reservation = Reservation.objects.filter(pk=reservation_pk).update(status=Status.CANCELLED)
+    return redirect('airplanes:all_reservations')
+
+@staff_member_required
+def reservation_list(request):
+    reservations = Reservation.objects.all()
+    if request.method == "POST":
+        flight_name = request.POST.get("flight_name")
+        if flight_name == "":
+            results = reservations
+        else:
+            flight = Flight.objects.get(name=flight_name)
+            results = Reservation.objects.filter(flight=flight)
+        return render(request, 'reservation_list.html', {"reservation_list": results})
+    else:
+        return render(request, 'reservation_list.html', {"reservation_list": reservations})
+
 
 class AirportBaseView(View):
     model = Airport
