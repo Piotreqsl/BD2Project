@@ -37,7 +37,7 @@
         >
           <span class="navbar-text text-white"
             ><a class="nav-link active" href="{% url 'airplanes:home' %}"
-              >DJANGO C.R.U.D.</a
+              ><h1>FlyFly</h1></a
             ></span
           >
           <ul class="navbar-nav mr-auto">
@@ -62,7 +62,7 @@
                 >flights</a
               >
             </li>
-
+            {% if user.is_superuser %}
             <li class="nav-item active">
               <a
                 class="nav-link active"
@@ -70,6 +70,7 @@
                 >passengers</a
               >
             </li>
+            {% endif %}
 
             <li class="nav-item active">
               <a
@@ -84,7 +85,10 @@
                 >search flights</a
               >
             </li>
-
+            {% if user.is_authenticated %}
+            <li class="nav-item active">
+              <a class="nav-link active" href="{% url 'airplanes:logout'%}">LOGOUT</a>
+            {% else %}
             <li class="nav-item active">
               <a class="nav-link active" href="{% url 'airplanes:login' %}"
                 >LOGIN</a
@@ -96,7 +100,7 @@
                 >REGISTER</a
               >
             </li>
-
+            {% endif %}
             <!-- 
                     
                 

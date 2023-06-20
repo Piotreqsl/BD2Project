@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic.list import ListView
@@ -7,7 +7,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 from .forms import CreateLoginForm, RegisterUserForm
-from .models import Airport, Plane, Flight, Passenger, Reservation
+from .models import Airport, Plane, Flight, Profile, Reservation
 
 
 # Create your views here.
@@ -25,7 +25,7 @@ def login_user(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('airplanes:login')
+                return redirect('airplanes:flight')
 
             # nie udało się
             info = "The logging in was unsuccessful"
@@ -34,6 +34,9 @@ def login_user(request):
         form = CreateLoginForm()
         return render(request, 'login.html', {"form": form})
 
+def logout_user(request):
+    logout(request)
+    return redirect('airplanes:home')
 
 def register_user(request):
     if request.method == "POST":
@@ -196,7 +199,7 @@ class FlightDeleteView(FlightBaseView, DeleteView):
 #############################
 
 class PassengerBaseView(View):
-    model = Passenger
+    model = Profile
     fields = '__all__'
     success_url = reverse_lazy('airplanes:all_passengers')
 

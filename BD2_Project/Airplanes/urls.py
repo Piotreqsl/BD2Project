@@ -35,7 +35,7 @@ urlpatterns = [
     path("reservation/create", views.ReservationCreateView.as_view(), name="reservation_create"),
     path("reservation/<int:pk>/update", views.ReservationUpdateView.as_view(), name="reservation_update"),
     path("reservation/<int:pk>/delete", views.ReservationDeleteView.as_view(), name="reservation_delete"),
-
+    path("logout/", views.logout_user, name="logout"),
     path("login/", views.login_user, name="login"),
     path("register/", views.register_user, name="register"),
     path("search/", views.flight_search_view, name="search"),

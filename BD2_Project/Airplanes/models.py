@@ -1,5 +1,8 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -8,13 +11,6 @@ country_name_length = 50
 person_name_length = 50
 plane_name_length = 50
 
-
-# class TestModel(models.Model):
-#     name = models.CharField(max_length=200)
-#     description = models.TextField()
-
-#     def __str__(self):
-#         return self.name
 
 class Plane(models.Model):
     name = models.CharField(max_length=plane_name_length)
@@ -59,7 +55,7 @@ class Flight(models.Model):
                     pk=field.value_from_object(self)).name if field.name == 'plane' else Airport.objects.get(
                     pk=field.value_from_object(self)).name)
                 for field in self._meta.fields]
-        
+
         reservation_count = Reservation.objects.filter(flight=self.id, paid=True).count()
         list.append(('reservation_count', reservation_count))
         free_places = self.no_seats - reservation_count
@@ -67,21 +63,27 @@ class Flight(models.Model):
         return list
 
 
-class Passenger(models.Model):
-    firstname = models.CharField(max_length=person_name_length)
-    surname = models.CharField(max_length=person_name_length)
+class Profile(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     age = models.IntegerField(default=18, validators=[MinValueValidator(12), MaxValueValidator(200)])
-    descrption = models.TextField()
+    description = models.TextField()
 
     def __str__(self):
-        return self.firstname + " " + self.surname
+        return str(self.user)
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in self._meta.fields]
 
+@receiver(post_save, sender=User)
+def create_user_passenger_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+@receiver(post_save, sender=User)
+def save_user_passenger_profile(sender, instance, created, **kwargs):
+    instance.profile.save()
 
 class Reservation(models.Model):
-    person = models.ForeignKey(Passenger, on_delete=models.CASCADE)
+    person = models.ForeignKey(Profile, on_delete=models.CASCADE)
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
     paid = models.BooleanField()
 
