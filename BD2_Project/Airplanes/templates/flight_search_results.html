@@ -1,15 +1,26 @@
-{% extends 'base.html' %} {% block content %}
-<h1>Search Results</h1>
-
-<ul>
-  {% for flight in flights %}
-  <li>
-    {% for label, value in flight.get_fields %}
-    <p>{{ label }}: {{ value }}</p>
-    {% if label == 'free_places' and value > 0 %}
-    <a href="#">Book</a>
-    {% endif %} {% endfor %}
-  </li>
-  {% endfor %}
-</ul>
+{% extends 'base.html' %}
+{% block content %}
+    <div style="margin-top: 30px;" class="container">
+    <h1>Search Results</h1>
+    {% if flights %}
+        <ul>
+            {% for flight in flights %}
+            <div style="border-top: solid 1px black; margin-bottom: 20px;">
+            <li>
+                {% for label, value in flight.get_fields %}
+                    <p>{{ label }}: {{ value }}</p>
+                    {% if label == 'free_places' and value > 0 %}
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'airplanes:book' flight.pk %}">Book</a>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </li>
+            </div>
+          {% endfor %}
+        </ul>
+    {% else %}
+        <h3>No results!</h3>
+    {% endif %}
+    </div>
 {% endblock %}

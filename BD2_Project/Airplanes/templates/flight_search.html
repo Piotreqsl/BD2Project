@@ -1,34 +1,55 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
+<div style="margin-top: 30px;" class="container">
 
 <form action="/result" method="get">
-  <h1>Wylot z:</h1>
+  <h3>Departure from:</h3>
   <input name="departure" type="text" id="departure" />
-  <h1>Przylot do:</h1>
+  <h3>Arrival to:</h3>
   <input name="arrival" type="text" id="arrival" />
+  <h3>Departure time:</h3>
+  <input name="start_date" type="datetime-local" id="start_date" value=""/>
+  <h3>Arrival time:</h3>
+  <input name="end_date" type="datetime-local" id="end_date" />
   <button type="submit" name="submit">Submit</button>
 </form>
+
 <script>
-  $( function() {
+  $(function() {
     var availableTags = [
-        {% for airport in airports %}
-            "{{airport.name}}",
-        {% endfor %}
+      {% for airport in airports %}
+        "{{ airport.name }}",
+      {% endfor %}
     ];
-    $( "#departure" ).autocomplete({
+
+    $("#departure").autocomplete({
       source: availableTags,
-     minLength: 0
-    })
-    .focus(function() {
-        $(this).autocomplete("search");
+      minLength: 0
+    }).focus(function() {
+      $(this).autocomplete("search");
     });
 
-    $( "#arrival" ).autocomplete({
+    $("#arrival").autocomplete({
       source: availableTags,
-     minLength: 0
-    })
-    .focus(function() {
-        $(this).autocomplete("search");
+      minLength: 0
+    }).focus(function() {
+      $(this).autocomplete("search");
     });
-  } );
+  });
+
+  window.addEventListener('load', () => {
+      var now = new Date();
+      now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+      now.setMilliseconds(null)
+    now.setSeconds(null)
+
+
+  document.getElementById('start_date').value = now.toISOString().slice(0, -1);
+      now.setFullYear(now.getFullYear()+1);
+  document.getElementById('end_date').value = now.toISOString().slice(0, -1);
+  })
 </script>
+
+</div>
+
 {% endblock %}

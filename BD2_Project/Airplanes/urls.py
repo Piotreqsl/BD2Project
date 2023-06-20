@@ -30,14 +30,18 @@ urlpatterns = [
     path("passenger/<int:pk>/update", views.PassengerUpdateView.as_view(), name="passenger_update"),
     path("passenger/<int:pk>/delete", views.PassengerDeleteView.as_view(), name="passenger_delete"),
 
-    path("reservation/", views.ReservationListView.as_view(), name="all_reservations"),
+    path("accept_reservation/<int:reservation_id>", views.accept_reservation, name='accept_reservation'),
+    path("reservation/", views.reservation_list, name="all_reservations"),
     path("reservation/<int:pk>", views.ReservationDetailView.as_view(), name="reservation_detail"),
     path("reservation/create", views.ReservationCreateView.as_view(), name="reservation_create"),
     path("reservation/<int:pk>/update", views.ReservationUpdateView.as_view(), name="reservation_update"),
-    path("reservation/<int:pk>/delete", views.ReservationDeleteView.as_view(), name="reservation_delete"),
-
+    path("reservation/<int:reservation_pk>/delete", views.cancel_reservation_manager, name="reservation_delete"),
+    path("logout/", views.logout_user, name="logout"),
     path("login/", views.login_user, name="login"),
     path("register/", views.register_user, name="register"),
     path("search/", views.flight_search_view, name="search"),
     path("result/", views.flight_search_results_view, name="flight_search_results"),
+    path("book/<int:pk>/", views.book, name="book"),
+    path("manage_reservations/", views.manage_reservations, name="manage_reservations"),
+    path("manage_reservations/cancel/<int:reservation_pk>", views.cancel_reservation, name="cancel")
 ]
