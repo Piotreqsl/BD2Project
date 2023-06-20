@@ -62,8 +62,21 @@ def register_user(request):
 
 def flight_search_view(request):
     airports = Airport.objects.all()
-    return render(request, 'flight_search.html', {"airports": airports})
+    if request.method == "POST":
+        return redirect('airplanes:flight_search_results')
+    else:
+        return render(request, 'flight_search.html', {"airports": airports})
 
+
+def flight_search_results_view(request):
+    arrival = request.GET["arrival"]
+    departure = request.GET['departure']
+    arrival_airport = Airport.objects.get(name=arrival)
+    print(arrival_airport.id)
+    departure_airport = Airport.objects.get(name=departure)
+    results = Flight.objects.filter(arrival_to=arrival_airport.id, departure_from=departure_airport.id)
+    
+    return render(request, 'flight_search_results.html', {"flights": results})
 
 class AirportBaseView(View):
     model = Airport

@@ -1,8 +1,12 @@
 {% extends 'base.html' %} {% block content %}
-<h1>Wylot z:</h1>
-<input type="text" id="departure" />
-<h1>Przylot do:</h1>
-<input type="text" id="arrival" />
+
+<form action="/result" method="get">
+  <h1>Wylot z:</h1>
+  <input name="departure" type="text" id="departure" />
+  <h1>Przylot do:</h1>
+  <input name="arrival" type="text" id="arrival" />
+  <button type="submit" name="submit">Submit</button>
+</form>
 <script>
   $( function() {
     var availableTags = [
