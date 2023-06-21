@@ -45,7 +45,7 @@ Aplikacja webowa do rezerwowania lotów i ich obsługi
 
 # Schemat bazy danych
 
-![Schemat](/schema.png)
+![Schemat](/schema2.png)
 
 # Jakie zapytania idą do bazy przy zapytaniach CRUD
 
