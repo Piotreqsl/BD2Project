@@ -24,10 +24,8 @@ Aplikacja webowa do rezerwowania lotów i ich obsługi
 
 # Role
 
-- Pracownik - zarządca rezerwacji
-- Pracownik - zarządca lotami
-- Admin
-- Pasażer (klient)
+- Menadżer - zarządza rezerwacjami, lotami
+- Pasażer (klient) - może zarezerwować lot
 
 # Funkcjonalności
 
@@ -35,12 +33,9 @@ Aplikacja webowa do rezerwowania lotów i ich obsługi
   - Rezerwacja biletu na przelot
   - Przeglądanie dostępnych lotów
   - Anulowanie rezerwacji
-- Pracownik - zarządca rezerwacji
-  - Potwierdzenie / odrzucenie rezerwacji
-- Pracownik - zarządca lotami
+- Menadżer
   - Dodawanie / edytowanie / usuwanie lotów
-- Administrator
-  - Wszystkie funkcjonalności powyżej
+  - Potwierdzenie / odrzucenie rezerwacji
   - Dodawanie / edytowanie / usuwanie wszelkich tabel
 
 # Schemat bazy danych
