@@ -43,7 +43,7 @@ Aplikacja webowa do rezerwowania lotów i ich obsługi
   - Wszystkie funkcjonalności powyżej
   - Dodawanie / edytowanie / usuwanie wszelkich tabel
 
-# Schemat bazy danych (stan na 10.05)
+# Schemat bazy danych
 
 ![Schemat](/schema.png)
 
